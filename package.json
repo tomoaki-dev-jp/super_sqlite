@@ -1,0 +1,177 @@
+{
+  "name": "super-sqlite",
+  "displayName": "Super SQLite",
+  "description": "SQLite データベースを VSCode から簡単に閲覧・編集・SQL 実行できる拡張機能",
+  "version": "0.1.0",
+  "publisher": "tono",
+  "author": "tono",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Data Science"
+  ],
+  "keywords": [
+    "sqlite",
+    "database",
+    "sql",
+    "db",
+    "viewer"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:sql"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "sql",
+        "extensions": [
+          ".spl"
+        ]
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "superSqlite",
+          "title": "Super SQLite",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "superSqlite": [
+        {
+          "id": "superSqlite.explorer",
+          "name": "データベース",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "superSqlite.explorer",
+        "contents": "SQLite データベースが開かれていません。\n[データベースを開く](command:superSqlite.openDatabase)\nエクスプローラーで .db / .sqlite ファイルを右クリックしても開けます。"
+      }
+    ],
+    "commands": [
+      {
+        "command": "superSqlite.openDatabase",
+        "title": "データベースを開く",
+        "category": "Super SQLite",
+        "icon": "$(database)"
+      },
+      {
+        "command": "superSqlite.refresh",
+        "title": "更新",
+        "category": "Super SQLite",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "superSqlite.closeDatabase",
+        "title": "データベースを閉じる",
+        "category": "Super SQLite",
+        "icon": "$(close)"
+      },
+      {
+        "command": "superSqlite.openTable",
+        "title": "テーブルを開く",
+        "category": "Super SQLite"
+      },
+      {
+        "command": "superSqlite.runQuery",
+        "title": "SQL を実行 (クエリエディタを開く)",
+        "category": "Super SQLite",
+        "icon": "$(play)"
+      },
+      {
+        "command": "superSqlite.runActiveFile",
+        "title": "この SQL ファイルを DB に対して実行",
+        "category": "Super SQLite",
+        "icon": "$(run)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "superSqlite.runActiveFile",
+          "when": "resourceExtname =~ /\\.(sql|spl)$/",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "superSqlite.runActiveFile",
+          "when": "resourceExtname =~ /\\.(sql|spl)$/",
+          "group": "1_run@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "superSqlite.runActiveFile",
+          "when": "resourceExtname =~ /\\.(sql|spl)$/",
+          "group": "navigation"
+        },
+        {
+          "command": "superSqlite.openDatabase",
+          "when": "resourceExtname =~ /\\.(db|sqlite|sqlite3|db3)$/",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "superSqlite.runActiveFile",
+          "when": "resourceExtname =~ /\\.(sql|spl)$/"
+        },
+        {
+          "command": "superSqlite.openTable",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "superSqlite.openDatabase",
+          "when": "view == superSqlite.explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "superSqlite.refresh",
+          "when": "view == superSqlite.explorer",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "superSqlite.runQuery",
+          "when": "view == superSqlite.explorer && viewItem == database",
+          "group": "inline@1"
+        },
+        {
+          "command": "superSqlite.closeDatabase",
+          "when": "view == superSqlite.explorer && viewItem == database",
+          "group": "inline@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.js --production",
+    "watch": "node esbuild.js --watch",
+    "compile": "tsc --noEmit",
+    "package": "npm run build && vsce package --allow-missing-repository"
+  },
+  "dependencies": {
+    "sql.js": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -1,0 +1,7 @@
+# 改行コードをリポジトリ内では LF に統一（OS 差による差分ノイズを防ぐ）
+* text=auto eol=lf
+
+# バイナリ扱い（差分を取らない）
+*.wasm binary
+*.vsix binary
+*.png binary

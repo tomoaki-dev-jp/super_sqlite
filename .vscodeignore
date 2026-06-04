@@ -1,0 +1,20 @@
+# --- .vsix に含めない開発用ファイル ---
+.vscode/**
+src/**
+**/*.ts
+**/*.map
+esbuild.js
+tsconfig.json
+.gitignore
+.gitattributes
+docs/**
+**/.DS_Store
+Thumbs.db
+
+# node_modules は基本除外しつつ、sql.js の WASM ランタイムだけ同梱する
+node_modules/**
+!node_modules/sql.js/package.json
+!node_modules/sql.js/dist/sql-wasm.js
+!node_modules/sql.js/dist/sql-wasm.wasm
+
+# LICENSE / README.md / CHANGELOG.md / media/ は .vsix に含める（除外しない）

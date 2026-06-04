@@ -1,0 +1,431 @@
+:root {
+  --gap: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+  background: var(--vscode-editor-background);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  flex: 0 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+select,
+button,
+textarea,
+input {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--vscode-foreground);
+}
+
+#tableSelect {
+  background: var(--vscode-dropdown-background);
+  color: var(--vscode-dropdown-foreground);
+  border: 1px solid var(--vscode-dropdown-border, transparent);
+  padding: 3px 6px;
+  border-radius: 3px;
+  max-width: 260px;
+}
+
+button {
+  background: var(--vscode-button-secondaryBackground, #3a3d41);
+  color: var(--vscode-button-secondaryForeground, #fff);
+  border: none;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--vscode-button-secondaryHoverBackground, #45494e);
+}
+
+#runBtn,
+#addRowBtn {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+#runBtn:hover,
+#addRowBtn:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+}
+
+.tab.active {
+  border-bottom-color: var(--vscode-focusBorder);
+  color: var(--vscode-foreground);
+}
+
+#status,
+#queryStatus {
+  font-size: 0.85em;
+  color: var(--vscode-descriptionForeground);
+}
+
+.view {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---- グリッド ---- */
+#grid,
+#queryResult {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+table.data {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+}
+
+table.data th,
+table.data td {
+  border: 1px solid var(--vscode-panel-border);
+  padding: 3px 8px;
+  text-align: left;
+  white-space: pre;
+  max-width: 420px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+
+table.data thead th {
+  position: sticky;
+  top: 0;
+  background: var(--vscode-editorGroupHeader-tabsBackground, #252526);
+  z-index: 1;
+  font-weight: 600;
+}
+
+table.data tbody tr:nth-child(even),
+table.data tbody tr:nth-child(even) {
+  background: var(--vscode-list-hoverBackground);
+}
+
+table.data td.editable {
+  cursor: text;
+}
+
+table.data td.null {
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+}
+
+table.data td .cellInput {
+  width: 100%;
+  border: 1px solid var(--vscode-focusBorder);
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  padding: 2px 4px;
+}
+
+.rowActions {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.delBtn {
+  padding: 0 6px;
+  background: transparent;
+  color: var(--vscode-errorForeground, #f48771);
+}
+
+.delBtn:hover {
+  background: var(--vscode-toolbar-hoverBackground);
+}
+
+th.pk::after {
+  content: " 🔑";
+  font-size: 0.8em;
+}
+
+/* ---- ページャ ---- */
+#pager {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 5px 10px;
+  border-top: 1px solid var(--vscode-panel-border);
+}
+
+#pageInfo {
+  font-size: 0.85em;
+  color: var(--vscode-descriptionForeground);
+}
+
+/* ---- SQL エディタ ---- */
+.editor-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+#sqlEditor {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-family: var(--vscode-editor-font-family, monospace);
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+}
+
+.editor-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 6px 10px;
+}
+
+.msg-error {
+  color: var(--vscode-errorForeground, #f48771);
+  padding: 10px;
+  white-space: pre-wrap;
+  font-family: var(--vscode-editor-font-family, monospace);
+}
+
+.msg-ok {
+  color: var(--vscode-testing-iconPassed, #73c991);
+  padding: 10px;
+}
+
+.empty {
+  padding: 16px;
+  color: var(--vscode-descriptionForeground);
+}
+
+/* ---- SQL 自動補完ドロップダウン ---- */
+.autocomplete {
+  position: absolute;
+  z-index: 1000;
+  min-width: 160px;
+  max-width: 360px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--vscode-editorSuggestWidget-background, var(--vscode-editor-background));
+  border: 1px solid var(--vscode-editorSuggestWidget-border, var(--vscode-widget-border, #454545));
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: var(--vscode-font-size);
+}
+
+.autocomplete.hidden {
+  display: none;
+}
+
+.ac-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 3px 10px;
+  cursor: pointer;
+  color: var(--vscode-editorSuggestWidget-foreground, var(--vscode-foreground));
+  white-space: nowrap;
+}
+
+.ac-item.active {
+  background: var(--vscode-editorSuggestWidget-selectedBackground, var(--vscode-list-activeSelectionBackground));
+  color: var(--vscode-editorSuggestWidget-selectedForeground, var(--vscode-list-activeSelectionForeground));
+}
+
+.ac-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ac-type {
+  flex: none;
+  font-size: 0.82em;
+  opacity: 0.65;
+}
+
+/* ---- 列ヘッダのフィルタ / 並べ替え UI ---- */
+.th-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.th-label {
+  cursor: pointer;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.th-label:hover {
+  text-decoration: underline;
+}
+
+.th-sort {
+  flex: none;
+  font-size: 0.8em;
+  color: var(--vscode-descriptionForeground);
+}
+
+.th-menu {
+  flex: none;
+  padding: 0 4px;
+  background: transparent;
+  color: var(--vscode-foreground);
+  border: none;
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 0.9em;
+}
+
+.th-menu:hover {
+  opacity: 1;
+  background: var(--vscode-toolbar-hoverBackground);
+}
+
+.th-menu.filtered {
+  opacity: 1;
+  color: var(--vscode-charts-blue, #4daafc);
+}
+
+/* 検索行 */
+table.data thead .filter-row th {
+  padding: 2px 4px;
+  background: var(--vscode-editorGroupHeader-tabsBackground, #252526);
+  font-weight: 400;
+}
+
+.filter-input {
+  width: 100%;
+  min-width: 60px;
+  box-sizing: border-box;
+  padding: 1px 4px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, transparent);
+}
+
+.filter-input.has-cond {
+  border-color: var(--vscode-charts-blue, #4daafc);
+}
+
+.filter-input::placeholder {
+  color: var(--vscode-input-placeholderForeground);
+}
+
+/* ヘッダの▼メニュー（ドロップダウン） */
+.header-menu {
+  position: absolute;
+  z-index: 1100;
+  min-width: 200px;
+  padding: 4px;
+  background: var(--vscode-menu-background, var(--vscode-editor-background));
+  color: var(--vscode-menu-foreground, var(--vscode-foreground));
+  border: 1px solid var(--vscode-menu-border, var(--vscode-widget-border, #454545));
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.header-menu.hidden {
+  display: none;
+}
+
+.hm-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 2px;
+}
+
+.hm-item {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.hm-item:hover {
+  background: var(--vscode-menu-selectionBackground, var(--vscode-list-activeSelectionBackground));
+  color: var(--vscode-menu-selectionForeground, var(--vscode-list-activeSelectionForeground));
+}
+
+.hm-divider {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--vscode-menu-separatorBackground, var(--vscode-widget-border, #454545));
+}
+
+.hm-title {
+  font-size: 0.85em;
+  opacity: 0.7;
+  padding: 0 2px;
+}
+
+.hm-op,
+.hm-val {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px 6px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, var(--vscode-widget-border, #454545));
+}
+
+.hm-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.hm-actions button {
+  flex: 1;
+  padding: 3px 6px;
+}
